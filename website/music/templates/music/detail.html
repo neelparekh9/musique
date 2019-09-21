@@ -1,0 +1,55 @@
+{% extends 'music/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{{ album.album_title }}{% endblock %}</title>
+
+</head>
+<body>
+
+	{% block body %}	
+<img src="{{ album.album_logo }}" height="200" width="200">
+<h2><strong>{{ album.artist }}</strong></h2>
+{% if error_message %}
+	<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<form action="{% url 'music:album-update' album.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="album_id" value="{{ album.id }}">
+    <button type="submit" class="btn btn-primary" ><i class="fas fa-edit"></i> Edit Album Details</button>
+</form>
+<form action="{% url 'music:album-delete' album.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="album_id" value="{{ album.id }}">
+    <button type="submit" class="btn btn-danger" ><i class="fas fa-trash-alt"></i> Delete Album</button>
+</form>
+
+ <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Audio File</th>
+                            <th>Favorite</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for song in album.song_set.all %}
+                            <tr>
+<td>{{ song.song_title }}</td>
+<td><audio controls src="{{ song.file_type.url }}">
+<div style="border: 1px solid black ; padding: 8px ;">
+Sorry, your browser does not support the <audio> tag used in this demo.
+</div>
+</audio></td>
+
+
+	{% endfor %}
+
+	
+	
+
+
+{% endblock %}
+</body>
+</html>

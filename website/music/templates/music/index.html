@@ -1,0 +1,34 @@
+{% extends 'music/base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	
+
+</head>
+<body>
+
+	
+
+	{% block body %}
+	{% if all_albums %}
+    
+	<ul >
+		<h3>Here are all the albums: </h3>
+		{% for album in all_albums %}
+         <div>
+		<li class="horizontal"><a href="{% url 'music:detail' album.id %}"><img src="{{ album.album_logo }}" class="img-responsive"></a>
+             <div class="caption">
+                            <a href="{% url 'music:detail' album.id %}"><h2>{{ album.album_title }}</h2></a>
+<h4>{{ album.artist }}</h4>
+
+        </li>	
+		</div><br>
+        {% endfor %}
+	</ul>
+	{% else %}
+	<h3>You don't have any albums.</h3>
+	{% endif %}
+	{% endblock %}
+</body>
+</html>>
